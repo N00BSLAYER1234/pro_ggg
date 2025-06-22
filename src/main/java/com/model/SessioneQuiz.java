@@ -34,7 +34,7 @@ public class SessioneQuiz {
 	        score++;
 	    }
 	    
-	    // Getters and Setters
+
 	    public List<Domanda> getQuestions() { return questions; }
 	    public void setQuestions(List<Domanda> questions) { this.questions = questions; }
 	    

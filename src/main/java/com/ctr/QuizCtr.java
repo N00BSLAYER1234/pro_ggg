@@ -27,8 +27,7 @@ public class QuizCtr {
 	    }
 	    
 	    @PostMapping("/start-quiz")
-	    public String startQuiz(@RequestParam String difficulty, 
-	                           @RequestParam(required = false) boolean training,
+	    public String startQuiz(@RequestParam String difficulty, @RequestParam(required = false) boolean training,
 	                           HttpSession session) {
 	        SessioneQuiz quizSession = quizService.createQuizSession(difficulty, training);
 	        session.setAttribute("quizSession", quizSession);

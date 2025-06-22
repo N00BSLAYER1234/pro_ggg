@@ -27,7 +27,7 @@ public class Runner implements CommandLineRunner{
     
     @Override
     public void run(String... args) throws Exception {
-        // Only run console mode if specific argument is provided
+       
         if (args.length > 0 && "console".equals(args[0])) {
         
         }
@@ -55,10 +55,10 @@ public class Runner implements CommandLineRunner{
 	}
 
 	private void showMainMenu() {
-        System.out.println("\n📋 MAIN MENU");
-        System.out.println("1. 🎯 Start Quiz");
-        System.out.println("2. 📚 Training Mode");
-        System.out.println("3. 🚪 Exit");
+        System.out.println("\n MAIN MENU");
+        System.out.println("1.  Start Quiz");
+        System.out.println("2. Training Mode");
+        System.out.println("3. Exit");
         System.out.print("Choose an option (1-3): ");
     }
     
@@ -71,7 +71,7 @@ public class Runner implements CommandLineRunner{
     }
     
     private void startQuiz() {
-        System.out.println("\n🎯 QUIZ MODE");
+        System.out.println("\n miao miao mode");
        
     }}
 	

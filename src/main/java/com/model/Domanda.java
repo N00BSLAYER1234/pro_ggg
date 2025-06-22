@@ -11,9 +11,9 @@ public class Domanda {
 	private String question;
     private String correctAnswer;
     private List<String> options;
-    private String type; // "capital", "population", "region", etc.
-    private String countryCode; // alpha2Code for flag display
-    private String countryName; // country name for reference
+    private String type; 
+    private String countryCode; 
+    private String countryName; 
     
     public Domanda() {}
     
@@ -28,7 +28,7 @@ public class Domanda {
         return countryCode != null ? "/flags/" + countryCode.toLowerCase() + ".png" : null;
     }
     
-    // Getters and Setters
+
     public String getQuestion() { return question; }
     public void setQuestion(String question) { this.question = question; }
     

@@ -50,7 +50,6 @@ public class QuizService {
         List<Country> countries = countryRepository.findCountriesWithCapital();
         
         if (countries.size() < 3) {
-            // Check if data is available, throw exception if not
             checkDataAvailability();
         }
         
