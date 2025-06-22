@@ -21,15 +21,16 @@ public class QuizCtr {
     
     @Autowired
     private QuizService quizService;
-    @GetMapping("/")
+    
+@GetMapping("/")
     public String home() {
         return "home";
     }
     
     @PostMapping("/start-quiz")
-    public String startQuiz(@RequestParam String difficulty, 
+public String start(@RequestParam String difficulty, 
                            @RequestParam(required = false) boolean training,  HttpSession session) {
-        SessioneQuiz quizSession = quizService.createQuizSession(difficulty, training);
+        SessioneQuiz quizSession = quizService.makeQuiz(difficulty, training);
         session.setAttribute("quizSession", quizSession);
         
         if (training) {
@@ -40,7 +41,7 @@ public class QuizCtr {
     }
     
     @PostMapping("/calibration")
-     public String handleCalibration(@RequestParam String answer, HttpSession session) {
+     public String calibrate(@RequestParam String answer, HttpSession session) {
     	session.setAttribute("calibrationAnswer", answer);
           String difficulty;
         if ("Rome".equals(answer)) {
@@ -57,9 +58,9 @@ public class QuizCtr {
             session.setAttribute("calibrationMessage", 
                 "Complimenti, divertiti con la difficoltà massima");
         }
-        SessioneQuiz quizSession = quizService.createQuizSession(difficulty, false);
-        quizSession.setCalibrationCompleted(true);
-        quizSession.setCalibrationAnswer(answer);
+        SessioneQuiz quizSession = quizService.makeQuiz(difficulty, false);
+        quizSession.setDone(true);
+        quizSession.setAnswer(answer);
         session.setAttribute("quizSession", quizSession);
         
         return "redirect:/quiz";
@@ -69,14 +70,14 @@ public class QuizCtr {
     public String showQuiz(Model model, HttpSession session) {
         SessioneQuiz quizSession = (SessioneQuiz) session.getAttribute("quizSession");
         
-        	if (quizSession == null || !quizSession.hasNextQuestion()) {
+        	if (quizSession == null || !quizSession.hasNext()) {
             return "redirect:/results";
         }
         
-        Domanda currentQuestion = quizSession.getCurrentQuestion();
+        Domanda currentQuestion = quizSession.getCurrent();
       model.addAttribute("question", currentQuestion);
-     	model.addAttribute("questionNumber", quizSession.getCurrentQuestionIndex() + 1);
-        model.addAttribute("totalQuestions", quizSession.getTotalQuestions());
+     	model.addAttribute("questionNumber", quizSession.getCurrentIndex() + 1);
+        model.addAttribute("totalQuestions", quizSession.getTotal());
         model.addAttribute("score", quizSession.getScore());
 
 
@@ -88,23 +89,23 @@ public class QuizCtr {
     }
     
     @PostMapping("/submit-answer")
-    public String submitAnswer(@RequestParam String answer, HttpSession session) {
+    public String submit(@RequestParam String answer, HttpSession session) {
         SessioneQuiz quizSession = (SessioneQuiz) session.getAttribute("quizSession");
         
-        if (quizSession != null && quizSession.hasNextQuestion()) {
-           Domanda currentQuestion = quizSession.getCurrentQuestion();
-          boolean isCorrect = quizService.checkAnswer(answer, currentQuestion.getCorrectAnswer());
+        if (quizSession != null && quizSession.hasNext()) {
+           Domanda currentQuestion = quizSession.getCurrent();
+          boolean isCorrect = quizService.check(answer, currentQuestion.getCorrect());
             if (isCorrect) {
-                quizSession.incrementScore();
+                quizSession.addScore();
             }
             
-            quizSession.nextQuestion();
+            quizSession.next();
             session.setAttribute("quizSession", quizSession);
         }
         return "redirect:/quiz";  }
     
     @GetMapping("/results")
-    public String showResults(Model model, HttpSession session) {
+    public String results(Model model, HttpSession session) {
        SessioneQuiz quizSession = (SessioneQuiz) session.getAttribute("quizSession");
         
         if (quizSession == null) {
@@ -112,11 +113,11 @@ public class QuizCtr {
         }
         
         model.addAttribute("score", quizSession.getScore());
-        model.addAttribute("totalQuestions", quizSession.getTotalQuestions());
-        model.addAttribute("percentage", (quizSession.getScore() * 100) / quizSession.getTotalQuestions());
+        model.addAttribute("totalQuestions", quizSession.getTotal());
+        model.addAttribute("percentage", (quizSession.getScore() * 100) / quizSession.getTotal());
         
-        if (quizSession.isCalibrationCompleted()) {
-          model.addAttribute("calibrationAnswer", quizSession.getCalibrationAnswer());
+        if (quizSession.isDone()) {
+          model.addAttribute("calibrationAnswer", quizSession.getAnswer());
             model.addAttribute("calibrationCompleted", true);
         }
         session.removeAttribute("quizSession");
@@ -124,8 +125,8 @@ public class QuizCtr {
     }
     
     @GetMapping("/training")
-    public String showTraining(Model model) {
-        List<Country> countries = quizService.getAllCountriesForTraining();
+    public String train(Model model) {
+        List<Country> countries = quizService.getAll();
          model.addAttribute("countries", countries);
         return "training";
     }

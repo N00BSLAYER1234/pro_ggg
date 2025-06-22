@@ -19,22 +19,22 @@ public class SessioneQuiz {
         this.calibrationCompleted = false;
     }
     
-    public boolean hasNextQuestion() {
+    public boolean hasNext() {
         return currentQuestionIndex < questions.size();
     }
     
-    public Domanda getCurrentQuestion() {
-        if (hasNextQuestion()) {
+    public Domanda getCurrent() {
+        if (hasNext()) {
             return questions.get(currentQuestionIndex);
         }
         return null;
     }
     
-    public void nextQuestion() {
+    public void next() {
         currentQuestionIndex++;
     }
     
-    public void incrementScore() {
+    public void addScore() {
         score++;
     }
     
@@ -46,11 +46,11 @@ public class SessioneQuiz {
         this.questions = questions; 
     }
     
-    public int getCurrentQuestionIndex() { 
+    public int getCurrentIndex() { 
         return currentQuestionIndex; 
     }
     
-    public void setCurrentQuestionIndex(int currentQuestionIndex) { 
+    public void setCurrentIndex(int currentQuestionIndex) { 
         this.currentQuestionIndex = currentQuestionIndex; 
     }
     
@@ -70,37 +70,37 @@ public class SessioneQuiz {
         this.difficulty = difficulty; 
     }
     
-    public boolean isTrainingMode() { 
+    public boolean isTraining() { 
         return isTrainingMode; 
     }
     
-    public void setTrainingMode(boolean trainingMode) { 
+    public void setTraining(boolean trainingMode) { 
         isTrainingMode = trainingMode; 
     }
     
-    public int getTotalQuestions() { 
+    public int getTotal() { 
         return questions != null ? questions.size() : 0; 
     }
     
 
-    public boolean isCalibrationCompleted() {
+    public boolean isDone() {
         return calibrationCompleted;
     }
     
-    public void setCalibrationCompleted(boolean calibrationCompleted) {
+    public void setDone(boolean calibrationCompleted) {
         this.calibrationCompleted = calibrationCompleted;
     }
     
-    public String getCalibrationAnswer() {
+    public String getAnswer() {
         return calibrationAnswer;
     }
     
-    public void setCalibrationAnswer(String calibrationAnswer) {
+    public void setAnswer(String calibrationAnswer) {
         this.calibrationAnswer = calibrationAnswer;
     }
     
 
-    public boolean isDifficultySetByCalibration() {
+    public boolean wasCalibrated() {
         return calibrationCompleted && "Rome".equals(calibrationAnswer);
     }
 }

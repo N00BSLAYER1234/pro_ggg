@@ -41,7 +41,6 @@ public class Runner implements CommandLineRunner{
                 case 1 -> startQuiz();
                 case 2 -> startTraining();
                 case 3 -> {
-                    System.out.println("Thanks for playing! 👋");
                     return;
                 }
                 default -> System.out.println("Invalid choice! Please try again.");

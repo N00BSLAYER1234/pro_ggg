@@ -24,40 +24,40 @@ public class QuizService {
     
     private final Random random = new Random();
     
-    public SessioneQuiz createQuizSession(String difficulty, boolean isTrainingMode) {
+    public SessioneQuiz makeQuiz(String difficulty, boolean isTrainingMode) {
         SessioneQuiz session = new SessioneQuiz();
         session.setDifficulty(difficulty);
-        session.setTrainingMode(isTrainingMode);
+        session.setTraining(isTrainingMode);
         
-        int questionCount = getQuestionCount(difficulty);
-        List<Domanda> questions = generateQuestions(questionCount, difficulty);
+        int questionCount = getCount(difficulty);
+        List<Domanda> questions = makeQuestions(questionCount, difficulty);
         session.setQuestions(questions);
         
         return session;
     }
     
-    private int getQuestionCount(String difficulty) {
+    private int getCount(String difficulty) {
         return switch (difficulty.toLowerCase()) {
-            case "easy" -> 5;
-            case "medium" -> 10;
-            case "hard" -> 15;
+            case "facile" -> 5;
+            case "medio" -> 10;
+            case "difficile" -> 15;
             default -> 10;
         };
     }
     
-    private List<Domanda> generateQuestions(int count, String difficulty) {
+    private List<Domanda> makeQuestions(int count, String difficulty) {
         List<Domanda> questions = new ArrayList<>();
         List<Country> countries = countryRepository.findCountriesWithCapital();
         
         if (countries.size() < 3) {
-            checkDataAvailability();
+            checkData();
         }
         
         Collections.shuffle(countries);
         
         for (int i = 0; i < Math.min(count, countries.size()); i++) {
             Country country = countries.get(i);
-            Domanda question = createCapitalQuestion(country, countries, difficulty);
+            Domanda question = makeCapitalQuestion(country, countries, difficulty);
             if (question != null) {
                 questions.add(question);
             }
@@ -66,7 +66,7 @@ public class QuizService {
         return questions;
     }
     
-    private Domanda createCapitalQuestion(Country correctCountry, List<Country> allCountries, String difficulty) {
+    private Domanda makeCapitalQuestion(Country correctCountry, List<Country> allCountries, String difficulty) {
         if (correctCountry.getCapital() == null || correctCountry.getCapital().isEmpty()) {
             return null;
         }
@@ -76,7 +76,7 @@ public class QuizService {
         
         List<String> options = new ArrayList<>();
         options.add(correctAnswer);
-        int optionCount = getOptionCount(difficulty);
+        int optionCount = getOptionsCount(difficulty);
         Set<String> usedCapitals = new HashSet<>();
         usedCapitals.add(correctAnswer);
         
@@ -91,11 +91,11 @@ public class QuizService {
         
         Collections.shuffle(options);
         Domanda question = new Domanda(questionText, correctAnswer, options, "capital");
-        question.setCountryCode(correctCountry.getAlpha2Code()); 
-        question.setCountryName(correctCountry.getName());
+        question.setCode(correctCountry.getAlpha2Code()); 
+        question.setName(correctCountry.getName());
         return question;
     }
-    private int getOptionCount(String difficulty) {
+    private int getOptionsCount(String difficulty) {
         return switch (difficulty.toLowerCase()) {
             case "facile" -> 3;
             case "medio" -> 4;
@@ -104,18 +104,18 @@ public class QuizService {
         };
     }
     
-    public boolean checkAnswer(String userAnswer, String correctAnswer) {
+    public boolean check(String userAnswer, String correctAnswer) {
         return userAnswer != null && userAnswer
         		.trim()
         		.equalsIgnoreCase(correctAnswer.trim());
     }
     
-    public List<Country> getAllCountriesForTraining() {
+    public List<Country> getAll() {
         return countryRepository.findAll();
     }
     
-    private void checkDataAvailability() {
-        long count = countryRepository.count();
+    private void checkData() {
+       long count = countryRepository.count();
         if (count == 0) {
             throw new RuntimeException("PASSA DA H2 PER RI-CARICARE I DATI");
         }

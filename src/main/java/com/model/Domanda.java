@@ -30,8 +30,8 @@ public class Domanda {
     public String getQuestion() { return question; }
     public void setQuestion(String question) { this.question = question; }
     
-    public String getCorrectAnswer() { return correctAnswer; }
-    public void setCorrectAnswer(String correctAnswer) { this.correctAnswer = correctAnswer; }
+    public String getCorrect() { return correctAnswer; }
+    public void setCorrect(String correctAnswer) { this.correctAnswer = correctAnswer; }
     
     public List<String> getOptions() { return options; }
     public void setOptions(List<String> options) { this.options = options; }
@@ -39,11 +39,9 @@ public class Domanda {
     public String getType() { return type; }
     public void setType(String type) { this.type = type; }
     
-    public String getCountryCode() { return countryCode; }
-    public void setCountryCode(String countryCode) { this.countryCode = countryCode; }
+    public String getCode() { return countryCode; }
+    public void setCode(String countryCode) { this.countryCode = countryCode; }
     
-    public String getCountryName() { return countryName; }
-    public void setCountryName(String countryName) { this.countryName = countryName; }
+    public String getName() { return countryName; }
+    public void setName(String countryName) { this.countryName = countryName; }
 }
-	
-

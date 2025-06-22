@@ -29,7 +29,6 @@
         button:disabled { background: #ccc; cursor: not-allowed; }
         .stats { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
         
-       
         .calibration-message { 
             background: rgba(255, 193, 7, 0.2); 
             border: 2px solid #FFC107; 
@@ -52,9 +51,7 @@
         <div class="header">
             <h1>GGG - indovina le capitali </h1>
             
-            
             <div th:if="${calibrationMessage}" class="calibration-message" th:text="${calibrationMessage}">
-
             </div>
             
             <div class="stats">
@@ -69,7 +66,7 @@
         <div class="question-container">
             <div class="flag-section" th:if="${question.flagUrl}">
                 <img th:src="${question.flagUrl}" 
-                     th:alt="'Flag of ' + ${question.countryName}"
+                     th:alt="'Flag of ' + ${question.name}"
                      class="country-flag"
                      onerror="this.style.display='none'">
             </div>
