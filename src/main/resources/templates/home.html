@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Countries Quiz</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 0; padding: 20px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; min-height: 100vh; }
+        .container { max-width: 600px; margin: 0 auto; text-align: center; background: rgba(255,255,255,0.1); padding: 40px; border-radius: 15px; }
+        h1 { font-size: 2.5em; margin-bottom: 20px; }
+        .subtitle { font-size: 1.2em; margin-bottom: 40px; opacity: 0.9; }
+        .mode-section { margin: 30px 0; padding: 20px; background: rgba(255,255,255,0.1); border-radius: 10px; }
+        .difficulty-select { margin: 20px 0; }
+        select { padding: 10px; border: none; border-radius: 5px; font-size: 16px; margin: 0 10px; }
+        button { background: #4CAF50; color: white; border: none; padding: 15px 30px; font-size: 16px; border-radius: 5px; cursor: pointer; margin: 10px; transition: background 0.3s; }
+        button:hover { background: #45a049; }
+        .training-btn { background: #2196F3; }
+        .training-btn:hover { background: #1976D2; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🌍 World Countries Quiz</h1>
+        <p class="subtitle">Test your geographical knowledge!</p>
+        
+        <form action="/start-quiz" method="post">
+            <div class="mode-section">
+                <h3>Choose Quiz Mode</h3>
+                <div class="difficulty-select">
+                    <label for="difficulty">Difficulty Level:</label>
+                    <select name="difficulty" id="difficulty">
+                        <option value="easy">Easy (5 questions, 3 options)</option>
+                        <option value="medium" selected>Medium (10 questions, 4 options)</option>
+                        <option value="hard">Hard (15 questions, 5 options)</option>
+                    </select>
+                </div>
+                
+                <button type="submit" name="training" value="false">🎯 Start Quiz</button>
+                <button type="submit" name="training" value="true" class="training-btn">📚 Training Mode</button>
+            </div>
+        </form>
+        
+        <div style="margin-top: 40px; font-size: 0.9em; opacity: 0.8;">
+            <p><strong>Quiz Mode:</strong> Answer questions and get scored</p>
+            <p><strong>Training Mode:</strong> Study country information at your own pace</p>
+        </div>
+    </div>
+</body>
+</html>

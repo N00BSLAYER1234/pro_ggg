@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Training - Countries Quiz</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 0; padding: 20px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; min-height: 100vh; }
+        .container { max-width: 800px; margin: 0 auto; }
+        .header { text-align: center; margin-bottom: 30px; background: rgba(255,255,255,0.1); padding: 20px; border-radius: 15px; }
+        .country-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
+        .country-card { background: rgba(255,255,255,0.1); padding: 20px; border-radius: 10px; transition: transform 0.3s; }
+        .country-card:hover { transform: translateY(-5px); background: rgba(255,255,255,0.2); }
+        .country-name { font-size: 1.4em; font-weight: bold; margin-bottom: 15px; color: #4CAF50; }
+        .country-info { margin: 8px 0; }
+        .flag-container { text-align: center; margin-bottom: 15px; }
+        .country-flag { 
+            max-width: 80px; 
+            max-height: 60px; 
+            border-radius: 5px; 
+            box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+            border: 1px solid rgba(255,255,255,0.2);
+            object-fit: cover;
+        }
+        button { background: #4CAF50; color: white; border: none; padding: 15px 30px; font-size: 16px; border-radius: 5px; cursor: pointer; margin: 10px; }
+        button:hover { background: #45a049; }
+        .search-box { width: 100%; padding: 15px; font-size: 16px; border: none; border-radius: 5px; margin-bottom: 20px; }
+        .controls { text-align: center; margin-bottom: 30px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📚 Training Mode</h1>
+            <p>Study country information at your own pace</p>
+            <a href="/"><button>🏠 Back to Home</button></a>
+        </div>
+        
+        <div class="controls">
+            <input type="text" class="search-box" id="searchBox" placeholder="Search countries..." onkeyup="filterCountries()">
+        </div>
+        
+        <div class="country-grid" id="countryGrid">
+            <div th:each="country : ${countries}" class="country-card" th:data-name="${country.name.toLowerCase()}">
+                <div class="flag-container">
+                    <img th:src="${country.flagUrl}" 
+                         th:alt="'Flag of ' + ${country.name}"
+                         class="country-flag"
+                         onerror="this.src='/flags/default.png'; this.onerror=null;">
+                </div>
+                <div class="country-name" th:text="${country.name}">Italy</div>
+                <div class="country-info"><strong>Capital:</strong> <span th:text="${country.capital ?: 'N/A'}">Rome</span></div>
+                <div class="country-info"><strong>Region:</strong> <span th:text="${country.region ?: 'N/A'}">Europe</span></div>
+                <div class="country-info"><strong>Subregion:</strong> <span th:text="${country.subregion ?: 'N/A'}">Southern Europe</span></div>
+                <div class="country-info"><strong>Population:</strong> <span th:text="${country.population ?: 'N/A'}">60M</span></div>
+                <div class="country-info"><strong>Code:</strong> <span th:text="${country.alpha2Code}">IT</span></div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        function filterCountries() {
+            const searchTerm = document.getElementById('searchBox').value.toLowerCase();
+            const countryCards = document.querySelectorAll('.country-card');
+            
+            countryCards.forEach(card => {
+                const countryName = card.getAttribute('data-name');
+                if (countryName.includes(searchTerm)) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+    </script>
+</body>
+</html>
