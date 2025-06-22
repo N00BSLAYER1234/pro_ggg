@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Training - Countries Quiz</title>
+    <title> Allenati </title>
     <style>
         body { font-family: Arial, sans-serif; margin: 0; padding: 20px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; min-height: 100vh; }
         .container { max-width: 800px; margin: 0 auto; }
@@ -31,9 +31,9 @@
 <body>
     <div class="container">
         <div class="header">
-            <h1>📚 Training Mode</h1>
-            <p>Study country information at your own pace</p>
-            <a href="/"><button>🏠 Back to Home</button></a>
+            <h1>Allenati</h1>
+            <p>flashcard</p>
+            <a href="/"><button>Ritorna alla home</button></a>
         </div>
         
         <div class="controls">
@@ -48,7 +48,7 @@
                          class="country-flag"
                          onerror="this.src='/flags/default.png'; this.onerror=null;">
                 </div>
-                <div class="country-name" th:text="${country.name}">Italy</div>
+               <div class="country-name" th:text="${country.name}">Italy</div>
                 <div class="country-info"><strong>Capital:</strong> <span th:text="${country.capital ?: 'N/A'}">Rome</span></div>
                 <div class="country-info"><strong>Region:</strong> <span th:text="${country.region ?: 'N/A'}">Europe</span></div>
                 <div class="country-info"><strong>Subregion:</strong> <span th:text="${country.subregion ?: 'N/A'}">Southern Europe</span></div>

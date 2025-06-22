@@ -28,15 +28,38 @@
         button:hover { background: #45a049; }
         button:disabled { background: #ccc; cursor: not-allowed; }
         .stats { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+        
+       
+        .calibration-message { 
+            background: rgba(255, 193, 7, 0.2); 
+            border: 2px solid #FFC107; 
+            padding: 15px; 
+            border-radius: 10px; 
+            margin-bottom: 20px; 
+            text-align: center; 
+            font-size: 1.1em;
+            animation: slideIn 0.5s ease-out;
+        }
+        
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="header">
-            <h1>World Countries Quiz</h1>
+            <h1>GGG - indovina le capitali </h1>
+            
+            
+            <div th:if="${calibrationMessage}" class="calibration-message" th:text="${calibrationMessage}">
+
+            </div>
+            
             <div class="stats">
-                <span>Question <span th:text="${questionNumber}">1</span> of <span th:text="${totalQuestions}">10</span></span>
-                <span>Score: <span th:text="${score}">0</span></span>
+                <span>domanda <span th:text="${questionNumber}">1</span> of <span th:text="${totalQuestions}">10</span></span>
+                <span>punteggio: <span th:text="${score}">0</span></span>
             </div>
             <div class="progress">
                 <div class="progress-bar" th:style="'width: ' + (${questionNumber} * 100 / ${totalQuestions}) + '%'"></div>
@@ -50,7 +73,7 @@
                      class="country-flag"
                      onerror="this.style.display='none'">
             </div>
-            <div class="question" th:text="${question.question}">What is the capital of Italy?</div>
+            <div class="question" th:text="${question.question}">Quale è la capitale d'Italia?</div>
         </div>
         
         <form action="/submit-answer" method="post" id="quizForm">
@@ -62,7 +85,7 @@
             </div>
             
             <div style="text-align: center; margin-top: 30px;">
-                <button type="submit" id="submitBtn" disabled>Submit Answer</button>
+                <button type="submit" id="submitBtn" disabled>submit answer</button>
             </div>
         </form>
     </div>
@@ -70,9 +93,22 @@
     <script>
         function selectOption(element, event) {
             document.querySelectorAll('.option').forEach(opt => opt.classList.remove('selected'));
+             
             element.classList.add('selected');
             element.querySelector('input[type="radio"]').checked = true;
             document.getElementById('submitBtn').disabled = false;
+        }
+        window.onload = function() {
+            const calibrationMessage = document.querySelector('.calibration-message');
+            if (calibrationMessage) {
+                setTimeout(function() {
+                    calibrationMessage.style.opacity = '0';
+                    calibrationMessage.style.transform = 'translateY(-20px)';
+                    setTimeout(function() {
+                        calibrationMessage.style.display = 'none';
+                    }, 300);
+                }, 5000);
+            }
         }
     </script>
 </body>

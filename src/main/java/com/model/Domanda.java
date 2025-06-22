@@ -6,8 +6,6 @@ import jakarta.persistence.Id;
 
 public class Domanda {
 	
-	
-	
 	private String question;
     private String correctAnswer;
     private List<String> options;

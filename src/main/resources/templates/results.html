@@ -18,7 +18,7 @@
 </head>
 <body>
     <div class="container">
-        <h1> Quiz Complete!</h1>
+        <h1> Hai completato il quiz</h1>
         
         <div class="score-circle" th:style="'--percentage: ' + ${percentage} * 3.6 + 'deg'">
             <span th:text="${percentage} + '%'">80%</span>
@@ -26,25 +26,25 @@
         
         <div class="stats">
             <div class="stat">
-                <h3>Correct Answers</h3>
+                <h3>risposte corrette</h3>
                 <p th:text="${score} + ' / ' + ${totalQuestions}">8 / 10</p>
             </div>
             <div class="stat">
-                <h3>Accuracy</h3>
+                <h3>accuracy</h3>
                 <p th:text="${percentage} + '%'">80%</p>
             </div>
         </div>
         
         <div class="performance">
-            <span th:if="${percentage >= 90}"> Excellent! Geography expert!</span>
-            <span th:if="${percentage >= 70 and percentage < 90}"> Great job! Keep it up!</span>
-            <span th:if="${percentage >= 50 and percentage < 70}">Good effort! Room for improvement!</span>
-            <span th:if="${percentage < 50}"> Keep studying! You'll get better!</span>
+           <span th:if="${percentage >= 90}"> ottimo! </span>
+            <span th:if="${percentage >= 70 and percentage < 90}"> eccellente </span>
+            <span th:if="${percentage >= 50 and percentage < 70}">bravo, continua così</span>
+            <span th:if="${percentage < 50}"> é intelligente ma non si impegna</span>
         </div>
         
         <div style="margin-top: 40px;">
-            <a href="/"><button> Back to Home</button></a>
-            <a href="/training"><button style="background: #2196F3;"> Study Mode</button></a>
+            <a href="/"><button> ritorna alla home</button></a>
+            <a href="/training"><button style="background: #2196F3;"> study mode</button></a>
         </div>
     </div>
 </body>

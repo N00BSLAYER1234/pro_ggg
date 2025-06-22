@@ -16,34 +16,94 @@
         button:hover { background: #45a049; }
         .training-btn { background: #2196F3; }
         .training-btn:hover { background: #1976D2; }
+        .calibration-btn { background: #FF9800; }
+        .calibration-btn:hover { background: #F57C00; }
+        
+       
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 1000; }
+        .modal-content { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: rgba(255,255,255,0.95); color: #333; padding: 40px; border-radius: 15px; text-align: center; max-width: 500px; }
+        .modal h3 { color: #333; margin-bottom: 20px; }
+        .modal p { margin: 20px 0; font-size: 1.2em; color: #333; }
+        .modal .option-btn { display: block; width: 100%; margin: 10px 0; padding: 15px; background: #2196F3; color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 16px; transition: background 0.3s; }
+        .modal .option-btn:hover { background: #1976D2; }
+        .modal .cancel-btn { background: #f44336; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; margin-top: 20px; }
+        .modal .cancel-btn:hover { background: #d32f2f; }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>🌍 World Countries Quiz</h1>
-        <p class="subtitle">Test your geographical knowledge!</p>
+        <h1> GGG - Geo Guessing Game </h1>
+        <p class="subtitle">Testa le tue conoscenze </p>
         
-        <form action="/start-quiz" method="post">
+        <form action="/start-quiz" method="post" id="quizForm">
             <div class="mode-section">
-                <h3>Choose Quiz Mode</h3>
+                <h3>scegli fra:</h3>
                 <div class="difficulty-select">
-                    <label for="difficulty">Difficulty Level:</label>
+                    <label for="difficulty">difficoltà </label>
                     <select name="difficulty" id="difficulty">
-                        <option value="easy">Easy (5 questions, 3 options)</option>
-                        <option value="medium" selected>Medium (10 questions, 4 options)</option>
-                        <option value="hard">Hard (15 questions, 5 options)</option>
+                        <option value="facile ">facile (5 domande, 3 opzioni)</option>
+                        <option value="medio " selected> medio (10 domande, 4 opzioni)</option>
+                        <option value="difficile "> difficile(15 questions, 5 opzioni)</option>
                     </select>
                 </div>
                 
-                <button type="submit" name="training" value="false">🎯 Start Quiz</button>
-                <button type="submit" name="training" value="true" class="training-btn">📚 Training Mode</button>
+                <button type="button" onclick="startCalibration()" class="calibration-btn"> calibration test</button>
+                <button type="submit" name="training" value="false"> inizia il quiz</button>
+                <button type="submit" name="training" value="true" class="training-btn"> allenati </button>
             </div>
         </form>
+        
+        
+        <div id="calibrationModal" class="modal">
+            <div class="modal-content">
+                <h3> calibration test</h3>
+                <p>Quale è la capitale d'Italia?</p>
+                <p style="font-size: 0.9em; color: #666; font-style: italic;">
+                    (What is the capital of Italy?)
+                </p>
+                
+                <form action="/calibration" method="post" id="calibrationForm">
+                    <button type="button" onclick="selectCalibrationAnswer('Rome')" class="option-btn">Rome</button>
+                    <button type="button" onclick="selectCalibrationAnswer('Turin')" class="option-btn">Turin</button>
+                    <button type="button" onclick="selectCalibrationAnswer('Milan')" class="option-btn">Milan</button>
+                    <input type="hidden" name="answer" id="calibrationAnswer" value="">
+                </form>
+                
+                <button onclick="closeCalibration()" class="cancel-btn">Cancel</button>
+            </div>
+        </div>
         
         <div style="margin-top: 40px; font-size: 0.9em; opacity: 0.8;">
             <p><strong>Quiz Mode:</strong> Answer questions and get scored</p>
             <p><strong>Training Mode:</strong> Study country information at your own pace</p>
+            <p><strong>Calibration Test:</strong> Let us adjust the difficulty based on your knowledge 😉</p>
         </div>
     </div>
+    
+    <script>
+        function startCalibration() {
+            document.getElementById('calibrationModal').style.display = 'block';
+        }
+        
+        function closeCalibration() {
+            document.getElementById('calibrationModal').style.display = 'none';
+        }
+        
+        function selectCalibrationAnswer(answer) {
+            // Set the hidden input value
+            document.getElementById('calibrationAnswer').value = answer;
+            
+            // Submit the calibration form
+            document.getElementById('calibrationForm').submit();
+        }
+        
+        // Close modal when clicking outside of it
+        window.onclick = function(event) {
+            const modal = document.getElementById('calibrationModal');
+            if (event.target === modal) {
+                closeCalibration();
+            }
+        }
+    </script>
 </body>
 </html>
