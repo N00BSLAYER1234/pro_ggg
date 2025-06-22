@@ -59,45 +59,32 @@
                 <h3> calibration test</h3>
                 <p>Quale è la capitale d'Italia?</p>
                 <p style="font-size: 0.9em; color: #666; font-style: italic;">
-                    (What is the capital of Italy?)
+                    (Quale è la capitale d'italia?)
                 </p>
                 
                 <form action="/calibration" method="post" id="calibrationForm">
                     <button type="button" onclick="selectCalibrationAnswer('Rome')" class="option-btn">Rome</button>
                     <button type="button" onclick="selectCalibrationAnswer('Turin')" class="option-btn">Turin</button>
-                    <button type="button" onclick="selectCalibrationAnswer('Milan')" class="option-btn">Milan</button>
+                   <button type="button" onclick="selectCalibrationAnswer('Milan')" class="option-btn">Milan</button>
                     <input type="hidden" name="answer" id="calibrationAnswer" value="">
                 </form>
                 
-                <button onclick="closeCalibration()" class="cancel-btn">Cancel</button>
+                <button onclick="closeCalibration()" class="cancel-btn">cancel</button>
             </div>
         </div>
-        
-        <div style="margin-top: 40px; font-size: 0.9em; opacity: 0.8;">
-            <p><strong>Quiz Mode:</strong> Answer questions and get scored</p>
-            <p><strong>Training Mode:</strong> Study country information at your own pace</p>
-            <p><strong>Calibration Test:</strong> Let us adjust the difficulty based on your knowledge 😉</p>
-        </div>
-    </div>
     
     <script>
         function startCalibration() {
             document.getElementById('calibrationModal').style.display = 'block';
         }
-        
-        function closeCalibration() {
+       function closeCalibration() {
             document.getElementById('calibrationModal').style.display = 'none';
         }
         
         function selectCalibrationAnswer(answer) {
-            // Set the hidden input value
             document.getElementById('calibrationAnswer').value = answer;
-            
-            // Submit the calibration form
             document.getElementById('calibrationForm').submit();
         }
-        
-        // Close modal when clicking outside of it
         window.onclick = function(event) {
             const modal = document.getElementById('calibrationModal');
             if (event.target === modal) {

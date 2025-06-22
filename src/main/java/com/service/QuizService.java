@@ -76,8 +76,6 @@ public class QuizService {
         
         List<String> options = new ArrayList<>();
         options.add(correctAnswer);
-        
-        // Add wrong options
         int optionCount = getOptionCount(difficulty);
         Set<String> usedCapitals = new HashSet<>();
         usedCapitals.add(correctAnswer);
@@ -92,37 +90,34 @@ public class QuizService {
         }
         
         Collections.shuffle(options);
-        
-        // Create question with flag support
         Domanda question = new Domanda(questionText, correctAnswer, options, "capital");
-        question.setCountryCode(correctCountry.getAlpha2Code()); // Add country code for flag
+        question.setCountryCode(correctCountry.getAlpha2Code()); 
         question.setCountryName(correctCountry.getName());
-        
         return question;
     }
-    
     private int getOptionCount(String difficulty) {
         return switch (difficulty.toLowerCase()) {
-            case "easy" -> 3;
-            case "medium" -> 4;
-            case "hard" -> 5;
+            case "facile" -> 3;
+            case "medio" -> 4;
+             case "difficile" -> 5;
             default -> 3;
         };
     }
     
     public boolean checkAnswer(String userAnswer, String correctAnswer) {
-        return userAnswer != null && userAnswer.trim().equalsIgnoreCase(correctAnswer.trim());
+        return userAnswer != null && userAnswer
+        		.trim()
+        		.equalsIgnoreCase(correctAnswer.trim());
     }
     
     public List<Country> getAllCountriesForTraining() {
         return countryRepository.findAll();
     }
     
-    // Remove hardcoded data - should be loaded from external source or SQL file
     private void checkDataAvailability() {
         long count = countryRepository.count();
         if (count == 0) {
-            throw new RuntimeException("No country data found in database. Please load countries data first.");
+            throw new RuntimeException("PASSA DA H2 PER RI-CARICARE I DATI");
         }
     }
 }

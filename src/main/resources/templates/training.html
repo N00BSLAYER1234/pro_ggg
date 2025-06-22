@@ -49,11 +49,11 @@
                          onerror="this.src='/flags/default.png'; this.onerror=null;">
                 </div>
                <div class="country-name" th:text="${country.name}">Italy</div>
-                <div class="country-info"><strong>Capital:</strong> <span th:text="${country.capital ?: 'N/A'}">Rome</span></div>
-                <div class="country-info"><strong>Region:</strong> <span th:text="${country.region ?: 'N/A'}">Europe</span></div>
-                <div class="country-info"><strong>Subregion:</strong> <span th:text="${country.subregion ?: 'N/A'}">Southern Europe</span></div>
-                <div class="country-info"><strong>Population:</strong> <span th:text="${country.population ?: 'N/A'}">60M</span></div>
-                <div class="country-info"><strong>Code:</strong> <span th:text="${country.alpha2Code}">IT</span></div>
+                <div class="country-info"><strong>capitale:</strong> <span th:text="${country.capital ?: 'N/A'}">Rome</span></div>
+                <div class="country-info"><strong>regione geografica:</strong> <span th:text="${country.region ?: 'N/A'}">Europe</span></div>
+                <div class="country-info"><strong> sub-regione:</strong> <span th:text="${country.subregion ?: 'N/A'}">Southern Europe</span></div>
+                <div class="country-info"><strong>popolazione:</strong> <span th:text="${country.population ?: 'N/A'}">60M</span></div>
+                <div class="country-info"><strong>codice alpha:</strong> <span th:text="${country.alpha2Code}">IT</span></div>
             </div>
         </div>
     </div>
